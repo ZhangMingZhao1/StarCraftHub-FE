@@ -6,6 +6,7 @@
     "antd": "^3.5.4",
     "babel-plugin-import": "^1.7.0",
     "react": "^16.4.0",
+    "react-app-rewire-less": "^2.1.1",
     "react-app-rewired": "^1.5.2",
     "react-dom": "^16.4.0",
     "react-router": "^4.2.0",
@@ -16,5 +17,9 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "less": "^2.7",
+    "less-loader": "^4.1.0"
   }
 }

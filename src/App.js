@@ -3,7 +3,8 @@ import './App.css';
 import {Button} from 'antd';
 import { Menu} from 'antd';
 import {Router,Route,Link} from 'react-router';
-import CMenu from './components/menu/index';
+import MMenu from './components/menu/index';
+import MHeader from './components/header/index';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
@@ -14,7 +15,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <CMenu></CMenu>
+        <MHeader></MHeader>   
+        <MMenu></MMenu>
       </div> 
     );
   }

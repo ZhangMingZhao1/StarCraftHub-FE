@@ -3,7 +3,7 @@ import { Menu} from 'antd';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
-class CMenu extends Component {
+class MMenu extends Component {
   constructor(props){
     super(props);
     this.handleClick = this.handleClick.bind(this);
@@ -20,6 +20,7 @@ class CMenu extends Component {
   render() {
     return (
         <Menu
+        theme="dark"
         onClick={this.handleClick}
         selectedKeys={[this.state.current]}
         mode="horizontal"
@@ -49,4 +50,4 @@ class CMenu extends Component {
   }
 }
 
-export default CMenu;
+export default MMenu;
