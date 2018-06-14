@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';  
 import { Layout } from 'antd';
 import { Button} from 'antd';
 import './index.less';
@@ -8,12 +9,15 @@ const {Header} = Layout;
 class MHeader extends Component {
   constructor(props){
     super(props);
-    
+    this.handleOnClick = this.handleOnClick.bind(this);
   }
   state = {
     current: 'video'
   }
-
+  handleOnClick() {
+    console.log("111");
+    return <Redirect push to="/sign" />
+  }
   render() {
     return (
         <Header>
@@ -23,6 +27,7 @@ class MHeader extends Component {
             <div className="loginin">
               <Button
                 type="primary"
+                onClick={this.handleOnClick}
                 >登陆</Button></div>
              <div className="signin">
               <Button

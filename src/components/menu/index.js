@@ -1,5 +1,15 @@
 import React, { Component } from 'react';
 import { Menu} from 'antd';
+import Login from '../../routes/login'
+import Sign from '../../routes/sign';
+import Stepinto from '../../routes/stepinto'
+import Video from '../../routes/video';
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
@@ -19,6 +29,8 @@ class MMenu extends Component {
   };
   render() {
     return (
+      <Router>
+      <div>
         <Menu
         theme="dark"
         onClick={this.handleClick}
@@ -27,10 +39,10 @@ class MMenu extends Component {
       >
         <Menu.Item key="introduce">
           {/* <Icon type="mail" />Navigation One */}
-          走进星际
+          <Link to="/stepinto">走进星际</Link>
         </Menu.Item>
         <Menu.Item key="video">
-          视频
+        <Link to="/video">视频</Link>
         </Menu.Item>
         <Menu.Item key="picture">
           图片
@@ -45,7 +57,11 @@ class MMenu extends Component {
           一周热数据
         </Menu.Item>
       </Menu>
-     
+
+      <Route path="/stepinto" component={Stepinto} />
+      <Route path="/video" component={Video} />
+     </div>
+     </Router>
     );
   }
 }
