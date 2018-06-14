@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu} from 'antd';
+import { Menu } from 'antd';
 import Login from '../../routes/login'
 import Sign from '../../routes/sign';
 import Stepinto from '../../routes/stepinto'
@@ -32,7 +32,7 @@ class MMenu extends Component {
       <Router>
       <div>
         <Menu
-        theme="dark"
+        // theme="dark"
         onClick={this.handleClick}
         selectedKeys={[this.state.current]}
         mode="horizontal"

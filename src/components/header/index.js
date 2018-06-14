@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';  
-import { Layout } from 'antd';
-import { Button} from 'antd';
+import { Layout,message, Button} from 'antd';
 import './index.less';
 import logo from '../../assets/logo.png';
 const {Header} = Layout;
@@ -9,15 +8,40 @@ const {Header} = Layout;
 class MHeader extends Component {
   constructor(props){
     super(props);
+    this.state = {
+      modalVisible: false,
+			action: 'login',
+			hasLogined: false,
+			userNickName: '',
+			userid: 0
+    }
     this.handleOnClick = this.handleOnClick.bind(this);
   }
-  state = {
-    current: 'video'
-  }
+  setModalVisible(value)
+	{
+		this.setState({modalVisible: value});
+  };
+
   handleOnClick() {
-    console.log("111");
-    return <Redirect push to="/sign" />
+      this.setModalVisible(true);
   }
+  handleSubmit(e) {
+    e.preventDefault();
+    let myFetchOptions = {
+      method: 'GET'
+    };
+    let formData = this.props.form.getFieldValue();
+    console.loh(formData);
+    fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=register&username=userName&password=password&r_userName="+formData.r_userName+"&r_password="+formData.r_password+"&r_confirmPassword="+formData.r_confirmPassword,myFetchOptions)
+      .then(res => res.json()).then(json=>{
+        this.setState({
+          userNickName:json.NickUserName,
+          userid:json.UserId
+        });
+      });
+      message.success("请求成功!");
+      this.setModalVisible(false);
+  };
   render() {
     return (
         <Header>
