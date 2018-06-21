@@ -27,7 +27,15 @@ class MHeader extends Component {
     }
     this.handleOnClick = this.handleOnClick.bind(this);
     this.callback = this.callback.bind(this);
-  }
+	}
+	componentWillMount() {
+		if(localStorage.userid!='') {
+			this.setState({hasLogined:true});
+			this.setState({userNickName:localStorage.userNickName,userid:localStorage.userid});
+		}
+	};
+	
+
   setModalVisible(value)
 	{
 		this.setState({modalVisible: value});
@@ -53,6 +61,8 @@ class MHeader extends Component {
 		.then(response => response.json())
 		.then(json => {
 			this.setState({userNickName: json.NickUserName, userid: json.UserId});
+			localStorage.userid= json.UserId;
+			localStorage.userNickName = json.NickUserName;
 		});
 		if (this.state.action=="login") {
 			this.setState({hasLogined:true});
@@ -68,6 +78,12 @@ class MHeader extends Component {
 			this.setState({action: 'register'});
 		}
   };
+
+	logout() {
+		localStorage.userid = '';
+		localStorage.userNickName = '';
+		this.setState({hasLogined:false});
+	}
   
   render() {
     let {getFieldProps} = this.props.form;
@@ -75,7 +91,7 @@ class MHeader extends Component {
       ? <div>
         <Button type="primary" htmlType="button">{this.state.userNickName}</Button>
         <Button type="dashed" htmlType="button">个人中心</Button>
-        <Button type="danger" htmlType="button">退出</Button>
+        <Button type="danger" htmlType="button" onClick={this.logout.bind(this)}>退出</Button>
       </div>
     : <div><Button type="primary" 
         onClick={this.handleOnClick} 
