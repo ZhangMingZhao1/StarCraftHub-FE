@@ -8,9 +8,19 @@ class Picture extends Component {
 		// this.handleUpload = this.handleUpload.bind(this);
 		this.state = {
 			projectImage : '',
+			pictureList: [],
 		}
 	}
 
+	// showPic() {
+	// 	let imgArr = [];
+
+	// }
+	// showup() {
+	// 	fetch("http://localhost:3000//showup").then(res => res.json()).then(json => {
+	// 		this.setState({pictureList: json.pictureList});
+	// 	})
+	// }
 	render() {
 		const props = {
 			action: '/upload',
@@ -21,6 +31,7 @@ class Picture extends Component {
 	
 			  if (file.status === 'done') {
 				message.success(`${file.name} file uploaded successfully`);
+				// this.showup();
 			  } else if (file.status === 'error') {
 				message.error(`${file.name} file upload failed.`);
 			  }
