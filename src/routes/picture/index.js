@@ -6,9 +6,13 @@ class Picture extends Component {
 	constructor() {
 		super();
 		// this.handleUpload = this.handleUpload.bind(this);
+		this.hangleOnClick = this.hangleOnClick.bind(this);
+		this.popupClick = this.popupClick.bind(this);
 		this.state = {
 			projectImage : '',
 			pictureList: [],
+			display : 'none',
+			picsrc : ''
 		}
 	}
 
@@ -21,6 +25,16 @@ class Picture extends Component {
 	// 		this.setState({pictureList: json.pictureList});
 	// 	})
 	// }
+	hangleOnClick(e) {
+		console.log(e.target.src);
+		let picsrc = e.target.src;
+		this.setState({picsrc:picsrc,display:"block"});
+
+	}
+
+	popupClick() {
+		this.setState({picsrc:"",display:"none"});
+	}
 	render() {
 		const props = {
 			action: '/upload',
@@ -41,14 +55,17 @@ class Picture extends Component {
 
 		return (
 		<div>
-			<div className="imgBox">
+			<div className="container" onClick={this.hangleOnClick}>
 				<div><img src="http://pao1opmq0.bkt.clouddn.com/sc2tt.jpg" alt=""/></div>
 				<div><img src="http://pao1opmq0.bkt.clouddn.com/scp.jpg" alt=""/></div>
 				<div><img src="http://pao1opmq0.bkt.clouddn.com/sc2pp.jpg" alt=""/></div>
 				<div><img src="http://pao1opmq0.bkt.clouddn.com/sc2z.jpg" alt=""/></div>
 				<div><img src="http://pao1opmq0.bkt.clouddn.com/sc2t.jpg" alt=""/></div>
 			</div>
-		
+			<div className="popup" style={{display: `${this.state.display}`}} onClick={this.popupClick} >
+    		<div className="bg"><img src={this.state.picsrc} alt=""/></div>
+  		</div>
+
 			<div className="upload">
 				<Upload {...props}>
 					<Button>
