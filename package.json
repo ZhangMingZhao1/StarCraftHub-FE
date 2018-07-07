@@ -5,6 +5,7 @@
   "dependencies": {
     "antd": "^3.5.4",
     "babel-plugin-import": "^1.7.0",
+    "qiniu": "^7.2.1",
     "react": "^16.4.0",
     "react-app-rewire-less": "^2.1.1",
     "react-app-rewired": "^1.5.2",
