@@ -37,6 +37,7 @@ class Picture extends Component {
 			method: 'GET',
 			mode: 'cors'
 		};
+		
 		fetch("http://112.74.191.12:3000/getat",myFetchOptions).then(res => res.json()).then(json => {this.setState({pictureList:json});console.log(json);});
 		
 	}
@@ -62,18 +63,12 @@ class Picture extends Component {
 			defaultFileList: [],
 		  };
 			imgDom = this.state.pictureList.map( (v,k) => {
-				return <div><img src={`http://pao1opmq0.bkt.clouddn.com/${v.key}`} alt=""/></div> })
+				return <div key={k}><img src={`http://pao1opmq0.bkt.clouddn.com/${v.key}`} alt=""/></div> })
 				
 	
 		return (
 		<div>
 			<div className="container" onClick={this.hangleOnClick}>
-				
-				{/* <div><img src="http://pao1opmq0.bkt.clouddn.com/sc2tt.jpg" alt=""/></div>
-				<div><img src="http://pao1opmq0.bkt.clouddn.com/scp.jpg" alt=""/></div>
-				<div><img src="http://pao1opmq0.bkt.clouddn.com/sc2pp.jpg" alt=""/></div>
-				<div><img src="http://pao1opmq0.bkt.clouddn.com/sc2z.jpg" alt=""/></div>
-				<div><img src="http://pao1opmq0.bkt.clouddn.com/sc2t.jpg" alt=""/></div> */}
 				{imgDom}
 			</div>
 			<div className="popup" style={{display: `${this.state.display}`}} onClick={this.popupClick} >

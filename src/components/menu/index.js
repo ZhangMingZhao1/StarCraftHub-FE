@@ -5,6 +5,7 @@ import Sign from '../../routes/sign';
 import Stepinto from '../../routes/stepinto'
 import Video from '../../routes/video';
 import Picture from '../../routes/picture';
+import Standing from '../../routes/standing';
 
 import {
   BrowserRouter as Router,
@@ -55,14 +56,15 @@ class MMenu extends Component {
         <Menu.Item key="discuss">
           <Link to="/discuss">论坛</Link>
         </Menu.Item>
-        <Menu.Item key="data">
-          <Link to="/hotdata">一周热数据</Link>
+        <Menu.Item key="standing">
+          <Link to="/standing">职业联赛排名</Link>
         </Menu.Item>
       </Menu>
 
       <Route path="/stepinto" component={Stepinto} />
       <Route path="/video" component={Video} />
       <Route path="/picture" component={Picture} /> 
+      <Route path="/standing" component={Standing} /> 
      </div>
      </Router>
     );
