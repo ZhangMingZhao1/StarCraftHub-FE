@@ -6,6 +6,7 @@ import Stepinto from '../../routes/stepinto'
 import Video from '../../routes/video';
 import Picture from '../../routes/picture';
 import Standing from '../../routes/standing';
+import Discuss from '../../routes/discuss';
 
 import {
   BrowserRouter as Router,
@@ -65,6 +66,8 @@ class MMenu extends Component {
       <Route path="/video" component={Video} />
       <Route path="/picture" component={Picture} /> 
       <Route path="/standing" component={Standing} /> 
+      <Route path="/discuss" component={Discuss} /> 
+
      </div>
      </Router>
     );
