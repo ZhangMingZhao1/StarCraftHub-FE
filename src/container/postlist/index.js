@@ -20,14 +20,19 @@ class Postlist extends React.Component {
   render() {
     return (
       <div>
-        {this.state.postlist.map(
-          (v,k) => {
-             return <div></div> 
-          }
-        )}
-
+        <div>
+          {this.state.postlist.map(
+            (v,k) => {
+              return <div>{v}</div> 
+            }
+          )}
       </div>
-    )
+    
+      <div>
+        <Post />
+      </div>
+    </div>
+)
   }
 
 }

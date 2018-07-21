@@ -3,8 +3,8 @@ import './App.css';
 import {Button} from 'antd';
 import { Menu} from 'antd';
 import {Router,Route,Link} from 'react-router';
-import MMenu from './components/menu/index';
-import MHeader from './components/header/index';
+import MMenu from './container/menu/index';
+import MHeader from './container/header/index';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
