@@ -48,16 +48,19 @@ class MHeader extends Component {
 	{
 		//页面开始向 API 进行提交数据
 		e.preventDefault();
-		var myFetchOptions = {
-			method: 'GET'
-		};
-		var formData = this.props.form.getFieldsValue();
-		console.log(formData);
-		fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=" + this.state.action
-		+ "&username="+formData.userName+"&password="+formData.password
-		+"&r_userName=" + formData.r_userName + "&r_password="
-		+ formData.r_password + "&r_confirmPassword="
-		+ formData.r_confirmPassword, myFetchOptions)
+		let formData = this.props.form.getFieldsValue();
+    let options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+				username:formData.r_userName,
+				password:formData.r_password
+      })
+    }
+
+		fetch("http://localhost:3002/" + this.state.action, options)
 		.then(response => response.json())
 		.then(json => {
 			this.setState({userNickName: json.NickUserName, userid: json.UserId});
