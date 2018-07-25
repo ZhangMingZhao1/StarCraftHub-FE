@@ -19,10 +19,12 @@ class MHeader extends Component {
   constructor(props){
     super(props);
     this.state = {
+			autoCompleteResult: [],
+			confirmDirty: false,
       modalVisible: false,
 			action: 'login',
 			hasLogined: false,
-			userNickName: '',
+			username: '',
 			userid: 0
     }
     this.handleOnClick = this.handleOnClick.bind(this);
@@ -44,7 +46,7 @@ class MHeader extends Component {
   handleOnClick() {
       this.setModalVisible(true);
   }
-	handleSubmit(e)
+	handleSubmit = (e) =>
 	{
 		//页面开始向 API 进行提交数据
 		e.preventDefault();
@@ -63,9 +65,10 @@ class MHeader extends Component {
 		fetch("http://localhost:3002/" + this.state.action, options)
 		.then(response => response.json())
 		.then(json => {
-			this.setState({userNickName: json.NickUserName, userid: json.UserId});
-			localStorage.userid= json.UserId;
-			localStorage.userNickName = json.NickUserName;
+			// this.setState({userNickName: json.NickUserName, userid: json.UserId});
+			// localStorage.userid= json.UserId;
+			// localStorage.userNickName = json.NickUserName;
+			console.log(json);
 		});
 		if (this.state.action=="login") {
 			this.setState({hasLogined:true});
@@ -73,6 +76,43 @@ class MHeader extends Component {
 		message.success("请求成功！");
 		this.setModalVisible(false);
 	};
+
+	handleSignIn = (e) => {
+		//页面开始向 API 进行提交数据
+		e.preventDefault();
+		let formData = this.props.form.getFieldsValue();
+    let options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+				username:formData.userName,
+				password:formData.password
+      })
+		};
+		
+			fetch("http://localhost:3002/" + this.state.action, options)
+			.then(response => response.json())
+			.then(data => {
+				// this.setState({userNickName: json.NickUserName, userid: json.UserId});
+				// localStorage.userid= json.UserId;
+				// localStorage.userNickName = json.NickUserName;
+				console.log(data);
+				if(data=="1") {
+					message.success("请求成功！");
+					this.setState({username:formData.userName})
+					localStorage.userName = formData.userName;
+					this.setState({hasLogined:true});
+					console.log(this.state.hasLogined,formData.userName,localStorage.userName);
+				}else {
+					message.error("请求失败！");
+				}
+			});
+
+			
+			this.setModalVisible(false);
+	}
 
 	callback(key) {
 		if (key == 1) {
@@ -83,16 +123,50 @@ class MHeader extends Component {
   };
 
 	logout() {
-		localStorage.userid = '';
-		localStorage.userNickName = '';
+		// localStorage.userid = '';
+		localStorage.username = '';
 		this.setState({hasLogined:false});
 	}
-  
+
+  handleConfirmBlur = (e) => {
+    const value = e.target.value;
+    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+	}
+
+	validateUserName = (rule, value, callback) => {
+		console.log(value.length);
+		if(value.length<2 || value.length>10) {
+			callback("Please enter 2-10 characters")
+		}else {
+			callback();
+		}
+	}
+
+	compareToFirstPassword = (rule, value, callback) => {
+    const form = this.props.form;
+    if (value && value !== form.getFieldValue('r_password')) {
+      callback('Two passwords that you enter is inconsistent!');
+    } else {
+      callback();
+    }
+	}
+
+	validateToNextPassword = (rule, value, callback) => {
+    const form = this.props.form;
+    if (value && this.state.confirmDirty) {
+      form.validateFields(['r_confirmPassword'], { force: true });
+    }
+    callback();
+  }
+	
+
   render() {
-    let {getFieldProps} = this.props.form;
+		let {getFieldProps} = this.props.form;
+		const { getFieldDecorator } = this.props.form;
+
     const userShow = this.state.hasLogined
       ? <div>
-        <Button type="primary" htmlType="button">{this.state.userNickName}</Button>
+        <Button type="primary" htmlType="button">{this.state.username}</Button>
         <Button type="dashed" htmlType="button">个人中心</Button>
         <Button type="danger" htmlType="button" onClick={this.logout.bind(this)}>退出</Button>
       </div>
@@ -108,8 +182,9 @@ class MHeader extends Component {
           </div>
           <Modal title="用户中心" wrapClassName="vertical-center-modal" visible={this.state.modalVisible} onCancel= {()=>this.setModalVisible(false)} onOk={() => this.setModalVisible(false)} okText="关闭">
 							<Tabs type="card" onChange={this.callback}>
+
 								<TabPane tab="登录" key="1">
-									<Form horizontal onSubmit={this.handleSubmit.bind(this)}>
+									<Form horizontal onSubmit={this.handleSignIn}>
 										<FormItem label="账户">
 											<Input placeholder="请输入您的账号" {...getFieldProps('userName')}/>
 										</FormItem>
@@ -119,16 +194,46 @@ class MHeader extends Component {
 										<Button type="primary" htmlType="submit">登录</Button>
 									</Form>
 								</TabPane>
+
+
 								<TabPane tab="注册" key="2">
-									<Form horizontal onSubmit={this.handleSubmit.bind(this)}>
+									<Form horizontal onSubmit={this.handleSubmit}>
+
 										<FormItem label="账户">
-											<Input placeholder="请输入您的账号" {...getFieldProps('r_userName')}/>
+										{getFieldDecorator('r_userName', {
+            rules: [{
+              required: true, message: 'Please input your username!',
+            }, {
+              validator: this.validateUserName,
+            }],
+          })(
+            <Input placeholder="请输入您的账号"/>
+          )}
+											
 										</FormItem>
+
 										<FormItem label="密码">
-											<Input type="password" placeholder="请输入您的密码" {...getFieldProps('r_password')}/>
-										</FormItem>
-										<FormItem label="确认密码">
-											<Input type="password" placeholder="请再次输入您的密码" {...getFieldProps('r_confirmPassword')}/>
+										{getFieldDecorator('r_password', {
+            rules: [{
+              required: true, message: 'Please input your password!',
+            }, {
+              validator: this.validateToNextPassword,
+            }],
+          })(
+            <Input type="password" />
+          )}	
+					</FormItem>
+					<FormItem label="确认密码">
+						{getFieldDecorator('r_confirmPassword', {
+            rules: [{
+              required: true, message: 'Please confirm your password!',
+            }, {
+              validator: this.compareToFirstPassword,
+            }],
+          })(
+            <Input type="password" onBlur={this.handleConfirmBlur}  placeholder="请再次输入您的密码" />
+          )}
+											
 										</FormItem>
 										<Button type="primary" htmlType="submit">注册</Button>
 									</Form>
