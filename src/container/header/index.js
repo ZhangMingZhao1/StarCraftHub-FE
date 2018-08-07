@@ -55,7 +55,8 @@ class MHeader extends Component {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
-      },
+			},
+			credentials: 'include', // 请求带上cookies，是每次请求保持会话一直
       body: JSON.stringify({
 				username:formData.r_userName,
 				password:formData.r_password
@@ -85,7 +86,8 @@ class MHeader extends Component {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
-      },
+			},
+			credentials: 'include', // 请求带上cookies，是每次请求保持会话一直
       body: JSON.stringify({
 				username:formData.userName,
 				password:formData.password

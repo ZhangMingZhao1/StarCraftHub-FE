@@ -21,31 +21,34 @@ class Post extends Component {
   // }
  
   handleSubmit = (e) => {
+
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
+
       if (!err) {
         console.log('Received values of form: ', values);
+        let options = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include', // 请求带上cookies，是每次请求保持会话一直
+          body: JSON.stringify({
+            content:values.content
+          })
+        }
+        
+        fetch("http://localhost:3002/post",options)
+          .then( (res)=>res.json()  );
       }
     });
 
-    let options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        content:this.state.content
-      })
-    }
-    
-    
-    fetch("localhost:3002/post",options)
-      .then( (res)=>res.json()  );
   }
 
   hangeleOnChange(e) {
     let content = e.target.value;
-    this.setState({content:content});
+    console.log(content);
+    // this.setState({content:content});
   }
 
   hasErrors = (fieldsError) => {
