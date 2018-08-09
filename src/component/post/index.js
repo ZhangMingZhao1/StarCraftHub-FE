@@ -1,4 +1,4 @@
-import {Form,Input,Button} from 'antd';
+import {Form,Input,Button,message} from 'antd';
 import React,{Component} from 'react'
 import './index.less';
 
@@ -9,7 +9,7 @@ class Post extends Component {
   state = {
     // loading: false,
     // iconLoading: false,
-    content:''
+    content:'',
   }
 
   // enterLoading = () => {
@@ -39,7 +39,17 @@ class Post extends Component {
         }
         
         fetch("http://localhost:3002/post",options)
-          .then( (res)=>res.json()  );
+          .then( (res)=>res.json()  ).then( (data)=>{
+            if(data===1) {
+              message.success('发表成功');
+              this.props.form.setFieldsValue({
+                content: ''
+              });
+            }else {
+              message.error('发表失败')
+            }
+            
+          } );
       }
     });
 
@@ -60,7 +70,7 @@ class Post extends Component {
     const contentError = isFieldTouched('content') && getFieldError('content');
 
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form style={{marginTop:20}} onSubmit={this.handleSubmit}>
       <FormItem
         validateStatus={contentError ? 'error' : ''}
         help={contentError || ''}

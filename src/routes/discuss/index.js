@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import Post from '../../component/post'
+import WrapPost from '../../component/post'
+import Postlist from '../../container/postlist'
 
 class Discuss extends Component {
   render() {
     return (
-      <Post />
+      <div>
+        <Postlist/>
+        <WrapPost/>
+      </div>
     );
   }
 }

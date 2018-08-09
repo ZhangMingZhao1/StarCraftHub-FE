@@ -186,7 +186,7 @@ class MHeader extends Component {
 							<Tabs type="card" onChange={this.callback}>
 
 								<TabPane tab="登录" key="1">
-									<Form horizontal onSubmit={this.handleSignIn}>
+									<Form horizontal="true" onSubmit={this.handleSignIn}>
 										<FormItem label="账户">
 											<Input placeholder="请输入您的账号" {...getFieldProps('userName')}/>
 										</FormItem>
@@ -199,7 +199,7 @@ class MHeader extends Component {
 
 
 								<TabPane tab="注册" key="2">
-									<Form horizontal onSubmit={this.handleSubmit}>
+									<Form horizontal="true" onSubmit={this.handleSubmit}>
 
 										<FormItem label="账户">
 										{getFieldDecorator('r_userName', {
