@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import WrapPost from '../../component/post'
+import Post from '../../container/post'
 import Postlist from '../../container/postlist'
+// import MEditor from '../../component/editor';
+
 
 class Discuss extends Component {
   render() {
     return (
       <div>
         <Postlist/>
-        <WrapPost/>
+        <Post />
+
       </div>
     );
   }
